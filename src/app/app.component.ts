@@ -1,4 +1,11 @@
-import { Component, trigger, state, style } from '@angular/core';
+import {
+  Component,
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +19,9 @@ import { Component, trigger, state, style } from '@angular/core';
       state('highlighted', style({
         'background-color': 'blue',
         transform: 'translateX(100px)'
-      }))
-    ])
+      })),
+      transition('normal => highlighted', animate(1000)),
+      transition('highlighted => normal', animate(300))])
   ]
 })
 export class AppComponent {
@@ -27,5 +35,10 @@ export class AppComponent {
 
   onAdd(item) {
     this.list.push(item);
+  }
+
+  onDelete(item) {
+    const index = this.list.findIndex(f => f === item);
+    this.list.splice(index, 1);
   }
 }
