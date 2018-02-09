@@ -4,7 +4,9 @@ import {
   state,
   style,
   animate,
-  transition
+  transition,
+  keyframes,
+  group
 } from '@angular/core';
 
 @Component({
@@ -66,6 +68,45 @@ import {
           transform: 'translate(100px)'
         }))
       ])
+    ]),
+    trigger('list2', [
+      state('in', style({
+        opacity: 1,
+        transform: 'translateX(0)'
+      })),
+      transition('void => *', [
+        animate(1000, keyframes([
+          style({
+            transform: 'translate(-100px)',
+            opacity: 0,
+            offset: 0
+          }),
+          style({
+            transform: 'translate(-50px)',
+            opacity: 0.5,
+            offset: 0.3
+          }),
+          style({
+            transform: 'translate(-20px)',
+            opacity: 1,
+            offset: .8
+          }),
+          style({
+            transform: 'translate(0px)',
+            opacity: 1,
+            offset: 1
+          })
+        ]))
+      ]),
+      transition('* => void', [
+        group([animate(300, style({
+          color: 'red'
+        })),
+        animate(500, style({
+          opacity: 0,
+          transform: 'translate(100px)'
+        }))])
+      ])
     ])
   ]
 })
@@ -90,5 +131,13 @@ export class AppComponent {
   onDelete(item) {
     const index = this.list.findIndex(f => f === item);
     this.list.splice(index, 1);
+  }
+
+  animationStart(event) {
+    console.log(event);
+  }
+
+  animationFinish(event) {
+    console.log(event);
   }
 }
