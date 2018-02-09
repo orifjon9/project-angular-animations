@@ -47,6 +47,25 @@ import {
         })),
         animate(500)
       ])
+    ]),
+    trigger('list1', [
+      state('in', style({
+        opacity: 1,
+        transform: 'translateX(0)'
+      })),
+      transition('void => *', [
+        style({
+          opacity: 0,
+          transform: 'translate(-100px)'
+        }),
+        animate(1000)
+      ]),
+      transition('* => void', [
+        animate(1000, style({
+          opacity: 0,
+          transform: 'translate(100px)'
+        }))
+      ])
     ])
   ]
 })
